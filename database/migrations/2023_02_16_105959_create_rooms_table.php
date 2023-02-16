@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
             $table->unsignedTinyInteger('capacity'); // max capacity 255
             $table->timestamps();
             $table->softDeletes();
