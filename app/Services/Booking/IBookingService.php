@@ -2,7 +2,9 @@
 
 namespace App\Services\Booking;
 
+use Carbon\Carbon;
+
 interface IBookingService
 {
-    public function calculateOccupancies(): float;
+    public function calculateOccupanciesRate(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): float;
 }
