@@ -40,27 +40,27 @@ class ExampleSeeder extends Seeder
             ->count(5)
             ->state(new Sequence(
                 [
-                'room_id'   => $rooms->where('id', 1)->first()->id,
+                'room_id'   => $rooms[0]->id,
                 'starts_at' => Carbon::createFromDate(2023, 1, 1),
                 'ends_at'   => Carbon::createFromDate(2023, 1, 5)
                 ],
                 [
-                    'room_id'   => $rooms->where('id', 1)->first()->id,
+                    'room_id'   => $rooms[0]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
                     'ends_at'   => Carbon::createFromDate(2023, 1, 5)
                 ],
                 [
-                    'room_id'   => $rooms->where('id', 1)->first()->id,
+                    'room_id'   => $rooms[0]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
                     'ends_at'   => Carbon::createFromDate(2023, 1, 5)
                 ],
                 [
-                    'room_id'   => $rooms->where('id', 2)->first()->id,
+                    'room_id'   => $rooms[1]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
                     'ends_at'   => Carbon::createFromDate(2023, 1, 5)
                 ],
                 [
-                    'room_id'   => $rooms->where('id', 2)->first()->id,
+                    'room_id'   => $rooms[1]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 3),
                     'ends_at'   => Carbon::createFromDate(2023, 1, 8)
                 ]
@@ -70,7 +70,7 @@ class ExampleSeeder extends Seeder
         Block::factory()
             ->create(
                 [
-                    'room_id'   => $rooms->where('id', 2)->first()->id,
+                    'room_id'   => $rooms[0]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
                     'ends_at'   => Carbon::createFromDate(2023, 1, 10)
                 ],

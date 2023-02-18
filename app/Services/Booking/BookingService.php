@@ -24,7 +24,7 @@ class BookingService implements IBookingService
     {
         $days = $startsAt->diff($endsAt)->days + 1;
 
-        $roomsCapacity = $this->roomRepository->getRoomOccupancy($roomIds);
+        $roomsCapacity = $this->roomRepository->getRoomCapacity($roomIds);
         $totalRoomCapacity = $roomsCapacity * $days;
 
         $totalOccupancy = $this->bookingRepository->getTotalOccupancy($startsAt, $endsAt, $roomIds);

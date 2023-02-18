@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 class RoomRepository implements IRoomRepository
 {
-    public function getRoomOccupancy(array $roomIds = null): int
+    public function getRoomCapacity(array $roomIds = null): int
     {
-        return Room::whereIn(function ($query) use ($roomIds) {
+         return (int) Room::where(function ($query) use ($roomIds) {
                 if($roomIds != null) {
                     $query = $query->whereIn('id', $roomIds);
                 }
                 return $query;
             })
             ->select(DB::raw('SUM(capacity) as capacity'))
-            ->sum('capacity')
-            ->get()
-            ->capacity
-            ;
+            ->first()
+             ->capacity
+        ;
     }
 }
