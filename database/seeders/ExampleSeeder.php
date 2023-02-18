@@ -42,27 +42,27 @@ class ExampleSeeder extends Seeder
                 [
                 'room_id'   => $rooms[0]->id,
                 'starts_at' => Carbon::createFromDate(2023, 1, 1),
-                'ends_at'   => Carbon::createFromDate(2023, 1, 5)
+                'ends_at'   => Carbon::createFromDate(2023, 1, 5)->endOfDay()
                 ],
                 [
                     'room_id'   => $rooms[0]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
-                    'ends_at'   => Carbon::createFromDate(2023, 1, 5)
+                    'ends_at'   => Carbon::createFromDate(2023, 1, 5)->endOfDay()
                 ],
                 [
                     'room_id'   => $rooms[0]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
-                    'ends_at'   => Carbon::createFromDate(2023, 1, 5)
+                    'ends_at'   => Carbon::createFromDate(2023, 1, 5)->endOfDay()
                 ],
                 [
                     'room_id'   => $rooms[1]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 1),
-                    'ends_at'   => Carbon::createFromDate(2023, 1, 5)
+                    'ends_at'   => Carbon::createFromDate(2023, 1, 5)->endOfDay()
                 ],
                 [
                     'room_id'   => $rooms[1]->id,
                     'starts_at' => Carbon::createFromDate(2023, 1, 3),
-                    'ends_at'   => Carbon::createFromDate(2023, 1, 8)
+                    'ends_at'   => Carbon::createFromDate(2023, 1, 8)->endOfDay()
                 ]
             ))
             ->create();
