@@ -2,13 +2,14 @@
 
 namespace App\Services\Booking;
 
+use App\DTOs\OccupancyRateDto;
 use App\Repositories\BlockRepository\IBlockRepository;
 use App\Repositories\BookingRepository\IBookingRepository;
 use App\Repositories\RoomRepository\IRoomRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
-class BookingService implements IBookingService
+class OccupancyRateService implements IOccupancyRateService
 {
     private IRoomRepository $roomRepository;
     private IBookingRepository $bookingRepository;
@@ -35,7 +36,7 @@ class BookingService implements IBookingService
         return $this->processData($blocks, $startsAt, $endsAt);
     }
 
-    public function calculateOccupanciesRate(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): float
+    public function calculateOccupanciesRate(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): OccupancyRateDto
     {
         $days = $startsAt->diff($endsAt)->days + 1;
 
@@ -46,7 +47,14 @@ class BookingService implements IBookingService
         $totalBlocks    = $this->calculateTotalBlock($startsAt, $endsAt, $roomIds);
 
         $occupancies = (float) ($totalOccupancy / ($totalRoomCapacity - $totalBlocks));
-        return  round($occupancies, 2, PHP_ROUND_HALF_EVEN);
+
+        return new OccupancyRateDto(
+            round($occupancies, 2, PHP_ROUND_HALF_EVEN),
+            $roomIds,
+            $startsAt,
+            $endsAt
+
+        );
     }
 
 

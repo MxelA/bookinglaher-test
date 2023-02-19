@@ -7,8 +7,8 @@ use App\Models\Booking;
 use App\Repositories\BlockRepository\IBlockRepository;
 use App\Repositories\BookingRepository\IBookingRepository;
 use App\Repositories\RoomRepository\IRoomRepository;
-use App\Services\Booking\BookingService;
-use App\Services\Booking\IBookingService;
+use App\Services\Booking\OccupancyRateService;
+use App\Services\Booking\IOccupancyRateService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -50,7 +50,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$booking]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt);
         $this->assertEquals(4, $totalOccupancy);
 
     }
@@ -76,7 +76,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$booking1, $booking2]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt);
         $this->assertEquals(26, $totalOccupancy);
 
     }
@@ -102,7 +102,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$booking1, $booking2]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt);
         $this->assertEquals(26, $totalOccupancy);
 
     }
@@ -125,7 +125,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$booking2]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt, $roomsId);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalOccupancy($startsAt, $endsAt, $roomsId);
         $this->assertEquals(1, $totalOccupancy);
 
     }
@@ -146,7 +146,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$blok]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalBlock($startsAt, $endsAt);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalBlock($startsAt, $endsAt);
         $this->assertEquals(1, $totalOccupancy);
 
     }
@@ -167,7 +167,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$blok]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalBlock($startsAt, $endsAt);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalBlock($startsAt, $endsAt);
         $this->assertEquals(10, $totalOccupancy);
 
     }
@@ -189,7 +189,7 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$blok]))
         ;
 
-        $totalOccupancy = (new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalBlock($startsAt, $endsAt, $roomsIds);
+        $totalOccupancy = (new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository))->calculateTotalBlock($startsAt, $endsAt, $roomsIds);
         $this->assertEquals(1, $totalOccupancy);
 
     }
@@ -229,10 +229,10 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$blok]))
         ;
 
-        $bookingService = new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository);
+        $bookingService = new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository);
         $occupancies = $bookingService->calculateOccupanciesRate($startsAt, $endsAt);
 
-        $this->assertEquals(0.36, $occupancies);
+        $this->assertEquals(0.36, $occupancies->occupancyRate);
     }
 
     public function test_calculate_occupancies_rate_for_a_month()
@@ -275,10 +275,10 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$blok]))
         ;
 
-        $bookingService = new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository);
+        $bookingService = new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository);
         $occupancies = $bookingService->calculateOccupanciesRate($startsAt, $endsAt);
 
-        $this->assertEquals(0.07, $occupancies);
+        $this->assertEquals(0.07, $occupancies->occupancyRate);
     }
 
     public function test_calculate_occupancies_rate_for_a_day_and_rooms()
@@ -318,10 +318,10 @@ class BookingServiceTest extends TestCase
             ->willReturn(Collection::make([$blok]))
         ;
 
-        $bookingService = new BookingService($this->roomRepository, $this->bookingRepository, $this->blockRepository);
+        $bookingService = new OccupancyRateService($this->roomRepository, $this->bookingRepository, $this->blockRepository);
         $occupancies = $bookingService->calculateOccupanciesRate($startsAt, $endsAt, $roomIds);
 
-        $this->assertEquals(0.2, $occupancies);
+        $this->assertEquals(0.2, $occupancies->occupancyRate);
     }
 
 }
