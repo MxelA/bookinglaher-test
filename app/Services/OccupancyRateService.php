@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Booking;
+namespace App\Services;
 
 use App\DTOs\OccupancyRateDto;
 use App\Repositories\BlockRepository\IBlockRepository;
@@ -26,14 +26,14 @@ class OccupancyRateService implements IOccupancyRateService
     {
         $bookings = $this->bookingRepository->getBookingsGroupByStartsAtEndsAt($startsAt, $endsAt, $roomIds);
 
-        return $this->processData($bookings, $startsAt, $endsAt);
+        return $this->processRepositoryData($bookings, $startsAt, $endsAt);
     }
 
     public function calculateTotalBlock(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): int
     {
         $blocks = $this->blockRepository->getBlocksGroupByStartsAtEndsAt($startsAt, $endsAt, $roomIds);
 
-        return $this->processData($blocks, $startsAt, $endsAt);
+        return $this->processRepositoryData($blocks, $startsAt, $endsAt);
     }
 
     public function calculateOccupanciesRate(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): OccupancyRateDto
@@ -53,12 +53,11 @@ class OccupancyRateService implements IOccupancyRateService
             $roomIds,
             $startsAt,
             $endsAt
-
         );
     }
 
 
-    private function processData(Collection $models, Carbon $startsAt, Carbon $endsAt): int
+    private function processRepositoryData(Collection $models, Carbon $startsAt, Carbon $endsAt): int
     {
         if($models->isEmpty())
             return 0;

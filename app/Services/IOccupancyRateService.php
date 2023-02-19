@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Booking;
+namespace App\Services;
 
 use App\DTOs\OccupancyRateDto;
 use Carbon\Carbon;

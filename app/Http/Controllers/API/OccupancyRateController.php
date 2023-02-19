@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\GetOccupancyRateDailyRequest;
 use App\Http\Requests\API\GetOccupancyRateMonthlyRequest;
 use App\Http\Resources\OccupancyRateResource;
-use App\Services\Booking\IOccupancyRateService;
+use App\Services\IOccupancyRateService;
 use Illuminate\Routing\Controller as BaseController;
 
 class OccupancyRateController extends BaseController
