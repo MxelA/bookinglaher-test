@@ -3,15 +3,21 @@
 namespace App\Repositories\BookingRepository;
 
 use App\Models\Booking;
+use App\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
-class BookingRepository implements IBookingRepository
+class BookingRepository extends BaseRepository implements IBookingRepository
 {
+    public function __construct(Booking $model)
+    {
+        parent::__construct($model);
+    }
+
     public function getBookingsGroupByStartsAtEndsAt(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): Collection
     {
-        return Booking::where(function ($query) use ($roomIds) {
+        return $this->model->where(function ($query) use ($roomIds) {
                 if($roomIds != null) {
                     $query = $query->whereIn('room_id', $roomIds);
                 }

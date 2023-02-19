@@ -3,15 +3,22 @@
 namespace App\Repositories\BlockRepository;
 
 use App\Models\Block;
+use App\Repositories\BaseRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class BlockRepository implements IBlockRepository
+class BlockRepository extends BaseRepository implements IBlockRepository
 {
+    public function __construct(Block $model)
+    {
+        parent::__construct($model);
+    }
+
     public function getBlocksGroupByStartsAtEndsAt(Carbon $startsAt, Carbon $endsAt, array $roomIds = null): Collection
     {
-        return Block::where(function ($query) use ($roomIds) {
+        return $this->model->where(function ($query) use ($roomIds) {
                 if($roomIds != null) {
                     $query = $query->whereIn('room_id', $roomIds);
                 }
