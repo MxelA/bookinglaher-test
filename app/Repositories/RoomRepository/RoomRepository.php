@@ -3,7 +3,6 @@
 namespace App\Repositories\RoomRepository;
 
 use App\Models\Room;
-use Illuminate\Support\Facades\DB;
 
 class RoomRepository implements IRoomRepository
 {
@@ -15,9 +14,7 @@ class RoomRepository implements IRoomRepository
                 }
                 return $query;
             })
-            ->select(DB::raw('SUM(capacity) as capacity'))
-            ->first()
-             ->capacity
+            ->sum('capacity')
         ;
     }
 }
