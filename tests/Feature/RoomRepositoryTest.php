@@ -48,14 +48,14 @@ class RoomRepositoryTest extends TestCase
      */
     public function test_calculate_all_room_capacaty()
     {
-        $roomCapacity = (new RoomRepository())->getRoomCapacity();
+        $roomCapacity = (new RoomRepository())->getRoomsCapacity();
 
         $this->assertEquals(12, $roomCapacity);
     }
 
     public function test_calculate_two_room_capacity()
     {
-        $roomCapacity = (new RoomRepository())->getRoomCapacity([$this->rooms[0]->id, $this->rooms[1]->id]);
+        $roomCapacity = (new RoomRepository())->getRoomsCapacity([$this->rooms[0]->id, $this->rooms[1]->id]);
 
         $this->assertEquals(10, $roomCapacity);
     }

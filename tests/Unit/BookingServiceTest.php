@@ -201,7 +201,7 @@ class BookingServiceTest extends TestCase
 
         $this->roomRepository
             ->expects($this->once())
-            ->method('getRoomCapacity')
+            ->method('getRoomsCapacity')
             ->willReturn(12)
         ;
 
@@ -242,7 +242,7 @@ class BookingServiceTest extends TestCase
 
         $this->roomRepository
             ->expects($this->once())
-            ->method('getRoomCapacity')
+            ->method('getRoomsCapacity')
             ->willReturn(12)
         ;
 
@@ -289,7 +289,7 @@ class BookingServiceTest extends TestCase
 
         $this->roomRepository
             ->expects($this->once())
-            ->method('getRoomCapacity')
+            ->method('getRoomsCapacity')
             ->with($roomIds)
             ->willReturn(6)
         ;

@@ -6,7 +6,7 @@ use App\Models\Room;
 
 class RoomRepository implements IRoomRepository
 {
-    public function getRoomCapacity(array $roomIds = null): int
+    public function getRoomsCapacity(array $roomIds = null): int
     {
          return (int) Room::where(function ($query) use ($roomIds) {
                 if($roomIds != null) {
