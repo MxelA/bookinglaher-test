@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\Booking\OccupancyRateService;
-use App\Services\Booking\IOccupancyRateService;
+use App\Services\OccupancyRateService;
+use App\Services\IOccupancyRateService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
