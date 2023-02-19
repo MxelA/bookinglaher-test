@@ -83,28 +83,57 @@ class BookingRepositoryTest extends TestCase
      */
     public function test_calculate_total_occupancy_for_specific_day()
     {
+
         $startsAt   = Carbon::create(2023,01,2);
         $endsAt     = Carbon::create(2023,01,2);
-        $totalOccupancy = (new BookingRepository())->getTotalOccupancy($startsAt, $endsAt);
+        $bookings   = (new BookingRepository())->getBookingsGroupByStartsAtEndsAt($startsAt, $endsAt);
 
-        $this->assertEquals(4, $totalOccupancy);
+        $expected = [
+            [
+                "aggregate" => 4,
+                "starts_at" => "2023-01-01",
+                "ends_at" => "2023-01-05"
+            ]
+        ];
+
+        $this->assertEquals(json_encode($expected), json_encode($bookings->toArray()));
     }
 
     public function test_calculate_total_occupancy_for_a_mount()
     {
         $startsAt   = Carbon::create(2023,01,1);
         $endsAt     = Carbon::create(2023,01,31);
-        $totalOccupancy = (new BookingRepository())->getTotalOccupancy($startsAt, $endsAt);
+        $bookings = (new BookingRepository())->getBookingsGroupByStartsAtEndsAt($startsAt, $endsAt);
 
-        $this->assertEquals(26, $totalOccupancy);
+        $expected = [
+            [
+            "aggregate" => 4,
+            "starts_at" => "2023-01-01",
+            "ends_at" => "2023-01-05"
+            ],
+            [
+            "aggregate" => 1,
+            "starts_at" => "2023-01-03",
+            "ends_at" => "2023-01-08"
+            ]
+        ];
+
+        $this->assertEquals(json_encode($expected), json_encode($bookings->toArray()));
     }
 
     public function test_calculate_total_occupancy_for_specific_day_and_rooms()
     {
         $startsAt   = Carbon::create(2023,01,6);
         $endsAt     = Carbon::create(2023,01,6);
-        $totalOccupancy = (new BookingRepository())->getTotalOccupancy($startsAt, $endsAt, [$this->rooms[1]->id, $this->rooms[2]->id]);
+        $bookings   = (new BookingRepository())->getBookingsGroupByStartsAtEndsAt($startsAt, $endsAt, [$this->rooms[1]->id, $this->rooms[2]->id]);
 
-        $this->assertEquals(1, $totalOccupancy);
+        $expected = [
+            [
+                "aggregate" => 1,
+                "starts_at" => "2023-01-03",
+                "ends_at" => "2023-01-08"
+            ]
+        ];
+        $this->assertEquals(json_encode($expected), json_encode($bookings->toArray()));
     }
 }
